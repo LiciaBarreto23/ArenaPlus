@@ -1,18 +1,9 @@
-# Arena+ — Sprint II
-
-Autenticação (Épico 1: US01, US02), **Gestão de quadras** (US19) e **Reservas do atleta** (Épico 2: US04–US07).
-
-## Rodar
-```bash
-npm install
-cp .env.example .env     # defina JWT_SECRET
-npm start                # http://localhost:3000   (requer Node >= 22.9)
-```
+# Arena+ Sistema
 
 ## Limpar o banco (desenvolvimento)
 ```bash
-npm run db:limpar-reservas   # apaga só as reservas; usuários, arenas e quadras continuam (pode rodar com o servidor ligado)
-npm run db:zerar             # apaga o banco inteiro; pare o servidor antes. Ele é recriado vazio no próximo npm start
+npm run db:limpar-reservas   # apaga só as reservas
+npm run db:zerar             # apaga o banco inteiro
 ```
 
 ## Telas
@@ -26,34 +17,12 @@ npm run db:zerar             # apaga o banco inteiro; pare o servidor antes. Ele
 | `/reservas` | atleta | 4 · Painel / 5 · Reserva ("Reservas", com calendário semanal por arena) |
 
 Após o login cada perfil vai direto para a sua tela (administrador → `/admin/quadras`, atleta → `/reservas`).
-Menu do administrador: Dashboard, Reservas, Mensagens ── Quadras, Funcionários (os dois últimos são configurações).
 Itens do menu marcados "em breve" (Dashboard, Funcionários, Mensagens…) são das próximas entregas.
 
 ## Arenas
 Cada administrador representa uma arena (o "Nome da arena / complexo" do cadastro) e cada quadra pertence à arena de quem a cadastrou
 (`quadra.arena_id`). O administrador só vê e altera as quadras da própria arena; o nome da quadra é único dentro da arena.
 
-| Método e rota | Uso |
-|---|---|
-| `GET /api/arenas` | arenas com pelo menos uma quadra ativa, **em ordem alfabética** (seletor do atleta) |
-| `GET /api/arenas/:id/agenda?inicio=AAAA-MM-DD&dias=7` | quadras ativas da arena + horários ocupados no período (alimenta o calendário) |
-
-**Tela do atleta (de cima para baixo):** próximas partidas + cards "Bora jogar?" e regras de alteração → Disponibilidade (arena, quadra e
-o botão "Visualizar calendário", que expande o calendário; "Reduzir calendário" fecha) → histórico de partidas.
-
-**Calendário do atleta:** lista de arenas (inicia na primeira em ordem alfabética) e lista de quadras (padrão "Todas as quadras"),
-semana de segunda a domingo com navegação (Hoje / ‹ ›, limitada a 90 dias). Cada célula de 1 h mostra quantas
-quadras estão livres, ocupado (cadeado), "Sua reserva" ou fechado/passado. Clicar numa célula livre abre a Nova reserva já com
-arena, quadra, data e horário preenchidos; o botão "Nova reserva" abre com a arena que está no calendário.
-
-## Reservas da arena (administrador)
-`GET /api/admin/agenda?inicio=AAAA-MM-DD&dias=1..42` — quadras da arena do administrador logado, reservas que ocupam horário
-(com nome, telefone e e-mail do cliente) e bloqueios. Outro administrador ou atleta não acessa.
-
-Tela `/admin/reservas`: filtros de quadra (padrão "Todas as quadras") e modalidade; visão por **dia** (colunas = quadras),
-**semana** (colunas = dias; com várias quadras mostra "N reservas / N livres" por horário) ou **mês** (grade de dias com as
-reservas resumidas). Clicar num horário da semana ou num dia do mês abre aquele dia; clicar numa reserva mostra os dados do
-cliente. O topo mostra reservas, ocupação e valor previsto do período visível.
 
 ## CRUD 1 — Quadras (administrador)
 | Ação | Método e rota | Regras |
