@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro · Arena+</title>
+  <link rel="icon" href="/img/logoA.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body data-tipo="atleta">
+  <main class="cartao">
+    <aside class="lateral">
+      <div class="topo">
+        <img class="logo-lateral" src="/img/logoBranca.svg" alt="Arena+">
+        <span class="etiqueta" data-para="administrador">GESTOR PRO</span>
+      </div>
+
+      <div class="pilha">
+        <div data-para="atleta">
+          <h2>Reserve em segundos. Entre em quadra.</h2>
+          <p>Acesso instantâneo a horários, confirmações e histórico de partidas em todas as arenas parceiras.</p>
+          <div class="destaques"><div><b>100% online</b>Confirmação na hora</div><div><b>Sem espera</b>Check-in digital</div></div>
+        </div>
+        <div data-para="administrador">
+          <h2>Potencialize sua operação esportiva.</h2>
+          <p>Controle de locações, agenda unificada, automação financeira e presença digital exclusiva para sua arena em minutos.</p>
+        </div>
+      </div>
+      <small>Arena+ Tecnologia Esportiva</small>
+    </aside>
+
+    <section class="conteudo">
+      <div class="pilha">
+        <div data-para="atleta">
+          <p class="sobretitulo">PORTAL DO JOGADOR</p>
+          <h1>Cadastro de Atleta</h1>
+          <p class="sub">Preencha seus dados para agendar jogos e torneios.</p>
+        </div>
+        <div data-para="administrador">
+          <p class="sobretitulo">NOVO ESTABELECIMENTO</p>
+          <h1>Cadastro de Administrador</h1>
+          <p class="sub">Cadastre sua arena e comece a gerenciar reservas.</p>
+        </div>
+      </div>
+
+      <div class="abas" role="tablist" aria-label="Tipo de conta">
+        <button type="button" role="tab" data-tipo="atleta" aria-selected="true"><svg class="ico"><use href="#i-user"/></svg>Atleta</button>
+        <button type="button" role="tab" data-tipo="administrador" aria-selected="false"><svg class="ico"><use href="#i-shield"/></svg>Administrador</button>
+      </div>
+
+      <div class="pilha">
+        <!-- ATLETA -->
+        <form data-para="atleta" data-tipo="atleta" data-api="/api/auth/register" novalidate>
+          <p class="alerta" role="alert" hidden></p>
+          <div class="campo"><label for="a-nome">Nome completo</label>
+            <div class="entrada"><svg class="ico"><use href="#i-user"/></svg><input id="a-nome" name="nome" autocomplete="name" placeholder="Ex: Felipe Silveira"></div>
+            <p class="erro" data-erro="nome"></p></div>
+          <div class="campo"><label for="a-email">E-mail</label>
+            <div class="entrada"><svg class="ico"><use href="#i-mail"/></svg><input id="a-email" name="email" type="email" autocomplete="email" placeholder="seuemail@exemplo.com"></div>
+            <p class="erro" data-erro="email"></p></div>
+          <div class="campo"><label for="a-tel">WhatsApp / Celular</label>
+            <div class="entrada"><svg class="ico"><use href="#i-phone"/></svg><input id="a-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" data-mascara="telefone" placeholder="(11) 98765-4321"></div>
+            <p class="erro" data-erro="telefone"></p></div>
+          <div class="duas">
+            <div class="campo"><label for="a-senha">Senha</label>
+              <div class="entrada"><svg class="ico"><use href="#i-lock"/></svg><input id="a-senha" name="senha" type="password" autocomplete="new-password" placeholder="Mínimo 6 dígitos">
+                <button type="button" class="olho" aria-label="Mostrar senha"><svg class="ico"><use href="#i-eye"/></svg></button></div>
+              <p class="erro" data-erro="senha"></p></div>
+            <div class="campo"><label for="a-conf">Confirmar senha</label>
+              <div class="entrada"><svg class="ico"><use href="#i-lock"/></svg><input id="a-conf" name="confirmarSenha" type="password" autocomplete="new-password" placeholder="Repita a senha"></div>
+              <p class="erro" data-erro="confirmarSenha"></p></div>
+          </div>
+          <label class="termos"><input type="checkbox" name="aceitouTermos"><span>Concordo com os Termos de Uso e Política de Privacidade da plataforma.</span></label>
+          <p class="erro" data-erro="aceitouTermos"></p>
+          <button class="botao" type="submit">Criar conta de atleta <svg class="ico"><use href="#i-arrow"/></svg></button>
+        </form>
+
+        <!-- ADMINISTRADOR -->
+        <form data-para="administrador" data-tipo="administrador" data-api="/api/auth/register" novalidate>
+          <p class="alerta" role="alert" hidden></p>
+          <div class="duas">
+            <div class="campo"><label for="d-nome">Nome do responsável</label>
+              <div class="entrada"><svg class="ico"><use href="#i-user"/></svg><input id="d-nome" name="nome" autocomplete="name" placeholder="Ex: Carlos Silva"></div>
+              <p class="erro" data-erro="nome"></p></div>
+            <div class="campo"><label for="d-arena">Nome da arena / complexo</label>
+              <div class="entrada"><svg class="ico"><use href="#i-building"/></svg><input id="d-arena" name="nomeArena" autocomplete="organization" placeholder="Ex: Arena Beach &amp; Padel"></div>
+              <p class="erro" data-erro="nomeArena"></p></div>
+            <div class="campo"><label for="d-email">E-mail corporativo</label>
+              <div class="entrada"><svg class="ico"><use href="#i-mail"/></svg><input id="d-email" name="email" type="email" autocomplete="email" placeholder="contato@suaarena.com"></div>
+              <p class="erro" data-erro="email"></p></div>
+            <div class="campo"><label for="d-tel">WhatsApp comercial</label>
+              <div class="entrada"><svg class="ico"><use href="#i-phone"/></svg><input id="d-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" data-mascara="telefone" placeholder="(11) 98888-7777"></div>
+              <p class="erro" data-erro="telefone"></p></div>
+          </div>
+          <div class="campo"><div class="linha-rotulo"><label for="d-senha" style="margin:0">Senha de acesso</label><span class="dica">Mínimo de 8 caracteres</span></div>
+            <div class="entrada"><svg class="ico"><use href="#i-lock"/></svg><input id="d-senha" name="senha" type="password" autocomplete="new-password" placeholder="Crie uma senha segura">
+              <button type="button" class="olho" aria-label="Mostrar senha"><svg class="ico"><use href="#i-eye"/></svg></button></div>
+            <p class="erro" data-erro="senha"></p></div>
+          <label class="termos"><input type="checkbox" name="aceitouTermos"><span>Concordo com os <a href="#">Termos de Uso</a> e as <a href="#">Políticas de Privacidade</a> corporativas do Arena+.</span></label>
+          <p class="erro" data-erro="aceitouTermos"></p>
+          <button class="botao" type="submit">Cadastrar minha arena <svg class="ico"><use href="#i-arrow"/></svg></button>
+        </form>
+      </div>
+
+      <p class="rodape">Já possui uma conta? <a href="/login">Entrar</a></p>
+    </section>
+  </main>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

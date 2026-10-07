@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR" class="carregando">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reservas · Arena+</title>
+  <link rel="icon" href="/img/logoA.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="lado"></aside>
+    <div>
+      <header class="topo"></header>
+      <main class="pagina">
+        <div class="cab">
+          <div>
+            <h1>Reservas</h1>
+            <p>Agenda das quadras da sua arena: quem reservou, quando e o que está livre.</p>
+          </div>
+          <div class="resumo" aria-label="Resumo do período">
+            <div><b id="n-reservas">0</b><small>Reservas</small></div>
+            <div><b id="n-ocupacao">0%</b><small>Ocupação</small></div>
+            <div><b id="n-valor">R$ 0</b><small>Previsto</small></div>
+          </div>
+        </div>
+
+        <section class="agenda" aria-labelledby="periodo">
+          <div class="agenda-topo">
+            <div class="campo-arena">
+              <label for="f-quadra">Quadra</label>
+              <select class="ctl" id="f-quadra"><option value="todas">Todas as quadras</option></select>
+            </div>
+            <div class="campo-arena">
+              <label for="f-mod">Modalidade</label>
+              <select class="ctl" id="f-mod"><option value="todas">Todas as modalidades</option></select>
+            </div>
+            <div class="campo-visao">
+              <span class="rotulo" id="visao-rot">Visualizar por</span>
+              <div class="filtro" role="group" aria-labelledby="visao-rot">
+                <button type="button" data-visao="dia" aria-pressed="false">Dia</button>
+                <button type="button" data-visao="semana" aria-pressed="true">Semana</button>
+                <button type="button" data-visao="mes" aria-pressed="false">Mês</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="cal-barra">
+            <b id="periodo"></b>
+            <div class="semana-nav">
+              <button class="btn claro sm" type="button" id="p-hoje"><svg class="ico p"><use href="#i-cal"/></svg>Hoje</button>
+              <button class="icone" type="button" id="p-ant" aria-label="Período anterior"><svg class="ico p"><use href="#i-chev-l"/></svg></button>
+              <button class="icone" type="button" id="p-prox" aria-label="Próximo período"><svg class="ico p"><use href="#i-chev-r"/></svg></button>
+            </div>
+          </div>
+
+          <div class="cal-envolve" id="cal" aria-busy="true"></div>
+          <div class="cal-rodape">
+            <div class="legenda" aria-hidden="true">
+              <span><i class="l"></i>Livre</span><span><i class="rp"></i>A confirmar</span><span><i class="rc"></i>Confirmada</span>
+              <span><i class="rd"></i>Concluída</span><span><i class="o"></i>Bloqueado</span><span><i class="p"></i>Fechado / passado</span>
+            </div>
+            <span class="dica" id="dica-visao"></span>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Detalhes da reserva -->
+  <dialog id="dlg-det" class="pequeno" aria-labelledby="det-tit">
+    <form method="dialog">
+      <div class="dcab">
+        <div><h3 id="det-tit">Reserva</h3><p id="det-sub"></p></div>
+        <button class="icone" value="fechar" aria-label="Fechar"><svg class="ico p"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="dcorpo"><dl class="detalhes" id="det-lista"></dl></div>
+      <div class="drodape"><button class="btn claro" value="fechar">Fechar</button></div>
+    </form>
+  </dialog>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/admin-reservas.js"></script>
+</body>
+</html>

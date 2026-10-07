@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar · Arena+</title>
+  <link rel="icon" href="/img/logoA.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+  <main class="cartao">
+    <aside class="lateral foto" aria-hidden="true"></aside>
+    <section class="conteudo">
+      <img class="logo" src="/img/logoVerde.svg" alt="Arena+">
+      <h1>Acesse sua conta</h1>
+      <p class="sub">Entre para reservar quadras e acompanhar seus jogos.</p>
+
+      <form data-api="/api/auth/login" novalidate>
+        <p class="alerta" role="alert" hidden></p>
+
+        <div class="campo">
+          <label for="identificador">E-mail</label>
+          <div class="entrada">
+            <svg class="ico"><use href="#i-user"/></svg>
+            <input id="identificador" name="identificador" autocomplete="username" type="email" placeholder="Ex: carlos@arena.com" aria-describedby="erro-identificador">
+          </div>
+          <p class="erro" id="erro-identificador" data-erro="identificador"></p>
+        </div>
+
+        <div class="campo">
+          <div class="linha-rotulo"><label for="senha" style="margin:0">Senha</label><a href="#" title="Em breve">Esqueceu a senha?</a></div>
+          <div class="entrada">
+            <svg class="ico"><use href="#i-lock"/></svg>
+            <input id="senha" name="senha" type="password" autocomplete="current-password" placeholder="Digite sua senha cadastrada" aria-describedby="erro-senha">
+            <button type="button" class="olho" aria-label="Mostrar senha"><svg class="ico"><use href="#i-eye"/></svg></button>
+          </div>
+          <p class="erro" id="erro-senha" data-erro="senha"></p>
+        </div>
+
+        <button class="botao" type="submit">Entrar no sistema <svg class="ico"><use href="#i-arrow"/></svg></button>
+      </form>
+
+      <p class="rodape">Ainda não tem conta? <a href="/cadastro">Cadastre-se</a></p>
+    </section>
+  </main>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

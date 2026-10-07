@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR" class="carregando">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reservas · Arena+</title>
+  <link rel="icon" href="/img/logoA.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="lado"></aside>
+    <div>
+      <header class="topo"></header>
+      <main class="pagina">
+        <div class="cab">
+          <div>
+            <h1>Reservas</h1>
+            <p>Veja os horários livres, reserve sua quadra e acompanhe seus jogos.</p>
+          </div>
+          <div class="resumo" aria-label="Resumo das reservas">
+            <div><b id="n-futuras">0</b><small>Futuras</small></div>
+            <div><b id="n-concluidas">0</b><small>Jogadas</small></div>
+            <div><b id="n-canceladas">0</b><small>Canceladas</small></div>
+          </div>
+        </div>
+
+        <!-- Próximas partidas + atalhos -->
+        <div class="cols">
+          <section aria-labelledby="t-proximas">
+            <h2 class="secao-tit" id="t-proximas"><svg class="ico"><use href="#i-cal"/></svg>Próximas partidas</h2>
+            <div id="proximas" class="rgrade" aria-busy="true"></div>
+          </section>
+
+          <aside class="lateral-r">
+            <div class="cta">
+              <b>Bora jogar?</b>
+              <p>Escolha um horário livre no calendário ou comece uma reserva do zero.</p>
+              <button class="btn" type="button" id="nova"><svg class="ico p"><use href="#i-plus"/></svg>Nova reserva</button>
+            </div>
+            <div class="aviso"><svg class="ico"><use href="#i-info"/></svg>
+              <span>As quadras são alugadas de <b>hora em hora</b>. Alterações e cancelamentos devem ser feitos com no mínimo <b>12 horas de antecedência</b>; depois disso, fale com a arena.</span></div>
+          </aside>
+        </div>
+
+        <!-- Disponibilidade (US04): arena e quadra; o calendário abre e fecha -->
+        <section class="agenda" aria-labelledby="t-agenda">
+          <h2 class="secao-tit" id="t-agenda"><svg class="ico"><use href="#i-clock"/></svg>Disponibilidade</h2>
+          <div class="agenda-topo">
+            <div class="campo-arena">
+              <label for="arena">Arena</label>
+              <select class="ctl" id="arena"></select>
+            </div>
+            <div class="campo-arena">
+              <label for="f-quadra">Quadra</label>
+              <select class="ctl" id="f-quadra"><option value="todas">Todas as quadras</option></select>
+            </div>
+          </div>
+
+          <button class="expandir" type="button" id="ver-cal" aria-expanded="false" aria-controls="cal-area">
+            <svg class="ico"><use href="#i-cal"/></svg><span>Visualizar calendário</span><svg class="ico seta"><use href="#i-chev-d"/></svg>
+          </button>
+
+          <div id="cal-area" hidden>
+            <div class="cal-barra">
+              <b id="semana-rotulo"></b>
+              <div class="semana-nav">
+                <button class="btn claro sm" type="button" id="sem-hoje"><svg class="ico p"><use href="#i-cal"/></svg>Hoje</button>
+                <button class="icone" type="button" id="sem-ant" aria-label="Semana anterior"><svg class="ico p"><use href="#i-chev-l"/></svg></button>
+                <button class="icone" type="button" id="sem-prox" aria-label="Próxima semana"><svg class="ico p"><use href="#i-chev-r"/></svg></button>
+              </div>
+            </div>
+            <div class="cal-envolve" id="cal" aria-busy="true"></div>
+            <div class="cal-rodape">
+              <div class="legenda" aria-hidden="true">
+                <span><i class="l"></i>Livre (clique para reservar)</span><span><i class="o"></i>Ocupado</span>
+                <span><i class="m"></i>Sua reserva</span><span><i class="p"></i>Fechado / horário passado</span>
+              </div>
+              <button class="btn claro sm" type="button" id="ocultar-cal"><svg class="ico p"><use href="#i-chev-u"/></svg>Reduzir calendário</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Histórico -->
+        <section aria-labelledby="t-hist">
+          <div class="barra">
+            <h2 class="secao-tit" id="t-hist" style="margin:0"><svg class="ico"><use href="#i-history"/></svg>Histórico de partidas</h2>
+            <div class="filtro" role="group" aria-label="Filtrar histórico" style="margin-left:auto">
+              <button type="button" data-hist="todas" aria-pressed="true">Todas</button>
+              <button type="button" data-hist="concluida" aria-pressed="false">Jogadas</button>
+              <button type="button" data-hist="cancelada" aria-pressed="false">Canceladas</button>
+            </div>
+          </div>
+          <div id="historico"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Criar / editar reserva -->
+  <dialog id="dlg-reserva" aria-labelledby="dr-tit">
+    <form id="f-reserva" novalidate>
+      <div class="dcab">
+        <div><h3 id="dr-tit">Nova reserva</h3><p id="dr-sub">Escolha a arena, a quadra, a data e um horário livre.</p></div>
+        <button class="icone" type="button" data-fechar aria-label="Fechar"><svg class="ico p"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="dcorpo">
+        <p class="alerta" role="alert" tabindex="-1" hidden></p>
+        <div class="campos">
+          <div class="campo inteiro"><label for="r-arena">Arena</label>
+            <select class="ctl" id="r-arena" name="arenaId"></select></div>
+          <div class="campo inteiro"><label for="r-quadra">Quadra</label>
+            <select class="ctl" id="r-quadra" name="quadraId"></select>
+            <p class="erro" data-erro="quadraId"></p></div>
+          <div class="campo inteiro"><label for="r-mod">Modalidade</label>
+            <select class="ctl" id="r-mod" name="modalidadeId"></select>
+            <p class="erro" data-erro="modalidadeId"></p></div>
+          <div class="campo"><label for="r-data">Data</label>
+            <input class="ctl" id="r-data" name="data" type="date">
+            <p class="erro" data-erro="data"></p></div>
+          <div class="campo"><label for="r-dur">Duração</label>
+            <select class="ctl" id="r-dur" name="duracao"></select>
+            <p class="erro" data-erro="duracao"></p></div>
+          <div class="campo inteiro"><span class="rotulo" id="r-hor-rot">Horário de início</span>
+            <div id="r-horarios" class="horarios" role="group" aria-labelledby="r-hor-rot"></div>
+            <div class="legenda" aria-hidden="true"><span><i></i>Livre</span><span><i class="o"></i>Ocupado</span><span><i class="m"></i>Sua reserva</span><span><i class="s"></i>Selecionado</span></div>
+            <p class="erro" data-erro="horaInicio"></p></div>
+        </div>
+        <div class="resumo-reserva" id="r-resumo" hidden aria-live="polite"><span id="r-quando"></span><b id="r-total"></b></div>
+      </div>
+      <div class="drodape">
+        <button class="btn claro" type="button" data-fechar>Voltar</button>
+        <button class="btn" type="submit" id="r-salvar">Confirmar reserva</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/reservas.js"></script>
+</body>
+</html>

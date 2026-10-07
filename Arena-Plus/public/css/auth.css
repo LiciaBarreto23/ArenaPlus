@@ -1,0 +1,98 @@
+:root{
+  --creme:#fcf9f4; --verde:#02543f; --verde-2:#0f6e56; --verde-claro:#7fd9b6; --tinta:#1d1d1b;
+  --suave:#6b6b66; --campo:#f6f3f0; --borda:#e4dfd8; --erro:#b42318; --erro-bg:#fef3f2;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--creme);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tinta);-webkit-font-smoothing:antialiased}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.ico{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.cartao{width:min(1024px,100%);min-height:640px;display:grid;grid-template-columns:5fr 7fr;background:#fff;
+  border-radius:8px;overflow:hidden;box-shadow:0 20px 50px rgba(2,84,63,.12),0 2px 6px rgba(0,0,0,.05)}
+
+/* Painel lateral */
+.lateral{position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:32px;color:#fff;
+  background:linear-gradient(160deg,#0e7a5b 0%,#02543f 60%,#013626 100%);overflow:hidden}
+.lateral::before{content:"";position:absolute;inset:20px;border:1.5px solid rgba(255,255,255,.12);border-radius:16px;pointer-events:none}
+.lateral::after{content:"";position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px;border:1.5px solid rgba(255,255,255,.12);border-radius:50%;pointer-events:none}
+.lateral>*{position:relative;z-index:1}
+.lateral h2{margin:0 0 16px;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.03em;font-weight:800}
+.lateral p{margin:0;max-width:34ch;font-size:15px;line-height:1.6;color:#b9efd9}
+.lateral .topo{display:flex;align-items:center;gap:8px}
+.logo-lateral{height:34px;width:auto;display:block}
+.etiqueta{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 10px;border-radius:99px;background:rgba(255,255,255,.14)}
+.destaques{display:flex;gap:8px;margin-top:28px}
+.destaques div{flex:1;padding:10px 12px;border-radius:6px;background:rgba(255,255,255,.12);font-size:12px;color:#9fe3c7}
+.destaques b{display:block;font-size:14px;color:#fff;margin-bottom:2px}
+.lateral small{font-size:12px;color:#7fd9b6;font-weight:600}
+
+/* Login: foto da arena no painel esquerdo */
+.lateral.foto{background:#02543f url(/img/fundo-login.jpg) center/cover no-repeat}
+.lateral.foto::after{display:none}
+.lateral.foto::before{inset:0;border:0;border-radius:0;background:linear-gradient(180deg,rgba(2,84,63,0) 55%,rgba(1,54,38,.55) 100%)}
+
+/* Atleta e Administrador ocupam o mesmo espaço: os dois blocos ficam empilhados
+   na mesma célula e só o ativo fica visível, então o cartão não muda de tamanho. */
+.pilha{display:grid}
+.pilha>*{grid-area:1/1;min-width:0}
+
+/* Formulário */
+.conteudo{display:flex;flex-direction:column;justify-content:center;padding:48px}
+.conteudo>*{width:100%;max-width:502px;margin-inline:auto}
+.logo{height:56px;display:block;margin-bottom:28px;object-fit:contain;object-position:left center}
+.sobretitulo{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--verde)}
+h1{margin:0 0 6px;font-size:32px;letter-spacing:-.03em;line-height:1.15}
+.sub{margin:0 0 20px;color:var(--suave);font-size:15px}
+.campo{margin-bottom:14px;min-width:0}
+.campo label,.linha-rotulo{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-size:12px;font-weight:600}
+.linha-rotulo a,.dica{font-size:12px;font-weight:600}
+.dica{color:var(--suave)}
+a{color:var(--verde);text-decoration:none;font-weight:600} a:hover{text-decoration:underline}
+.entrada{display:flex;align-items:center;gap:10px;height:44px;padding:0 12px;border-radius:6px;background:var(--campo);
+  border:1.5px solid transparent;color:#77726b}
+.entrada:focus-within{border-color:var(--verde-2);background:#fff;box-shadow:0 0 0 3px rgba(15,110,86,.15)}
+.entrada input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:inherit;font-size:15px;color:var(--tinta)}
+.entrada input::placeholder{color:#8a857e}
+.olho{border:0;background:none;padding:2px;color:inherit;cursor:pointer;display:flex;border-radius:4px}
+.olho:focus-visible{outline:2px solid var(--verde-2)}
+.campo.invalido .entrada{border-color:var(--erro);background:var(--erro-bg)}
+.erro{margin:5px 0 0;font-size:12px;color:var(--erro);min-height:0}
+.erro:empty{display:none}
+.duas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}
+.termos{display:flex;gap:8px;align-items:flex-start;margin:4px 0 6px;font-size:12px;line-height:1.5}
+.termos input{margin-top:2px;width:16px;height:16px;accent-color:var(--verde)}
+.alerta{margin:0 0 14px;padding:10px 12px;border-radius:6px;font-size:14px;background:var(--erro-bg);color:var(--erro);border:1px solid #fecdca}
+.alerta[hidden]{display:none}
+.botao{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;margin-top:14px;border:0;border-radius:6px;
+  background:var(--verde);color:#fff;font:inherit;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 10px rgba(2,84,63,.25)}
+.botao:hover{background:#013f2f} .botao:disabled{opacity:.65;cursor:wait}
+.botao:focus-visible{outline:3px solid rgba(15,110,86,.4);outline-offset:2px}
+.rodape{margin-top:24px;text-align:center;font-size:15px;color:#3d3d39}
+
+/* Abas Atleta / Administrador */
+.abas{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin-bottom:20px;border-radius:8px;background:#f0ede9}
+.abas button{display:flex;align-items:center;justify-content:center;gap:6px;height:34px;border:0;border-radius:6px;background:none;
+  font:inherit;font-size:13px;font-weight:600;color:#55514b;cursor:pointer}
+.abas button[aria-selected=true]{background:#fff;color:var(--verde);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.abas .ico{width:16px;height:16px}
+
+/* Troca de conteúdo por tipo de conta */
+body[data-tipo=atleta] [data-para=administrador],body[data-tipo=administrador] [data-para=atleta]{visibility:hidden}
+
+/* Painel pós-login */
+.painel{min-height:auto;padding:40px;display:block}
+.painel .conteudo{padding:0}
+.painel dl{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;margin:20px auto;font-size:15px}
+.painel dt{color:var(--suave)} .painel dd{margin:0;font-weight:600}
+
+@media (max-width:820px){
+  body{padding:0;place-items:stretch}
+  .cartao{grid-template-columns:1fr;border-radius:0;min-height:100vh;box-shadow:none}
+  .lateral{padding:20px 24px}
+  .lateral h2,.lateral p,.destaques,.lateral small,.lateral .rodape-lat{display:none}
+  .conteudo{padding:28px 24px 40px;justify-content:flex-start}
+}
+@media (max-width:420px){.duas{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:no-preference){.entrada,.botao{transition:border-color .15s,background .15s,box-shadow .15s}}
+@media (max-width:820px){.lateral.foto{display:none}}

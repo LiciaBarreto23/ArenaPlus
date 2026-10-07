@@ -1,0 +1,25 @@
+{
+  "name": "arena-auth",
+  "version": "1.0.0",
+  "description": "Autenticação do Arena+ (cadastro e login de atletas e administradores)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "dev": "node --watch --env-file-if-exists=.env src/server.js",
+    "db:limpar-reservas": "node scripts/limpar-banco.js reservas",
+    "db:zerar": "node scripts/limpar-banco.js tudo"
+  },
+  "engines": {
+    "node": ">=22.9"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^13.0.3",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
