@@ -9,12 +9,12 @@ npm run db:zerar             # apaga o banco inteiro
 ## Telas
 | Rota | Perfil | Protótipo |
 |---|---|---|
-| `/login` | todos | 1 · Login (foto da arena à esquerda, logo verde) |
-| `/cadastro` | público | 2 · Cadastro de Atleta (aba **Atleta**, logo branca) |
+| `/login` | todos | 1 · Login |
+| `/cadastro` | público | 2 · Cadastro de Atleta (aba **Atleta**) |
 | `/cadastro#administrador` | público | 3 · Cadastro de Administrador (aba **Administrador**) |
-| `/admin/reservas` | administrador | 12 · Administrador › Reservas (agenda por dia, semana ou mês) |
+| `/admin/reservas` | administrador | 12 · Administrador › Reservas |
 | `/admin/quadras` | administrador | 14 · Configurações › Quadras |
-| `/reservas` | atleta | 4 · Painel / 5 · Reserva ("Reservas", com calendário semanal por arena) |
+| `/reservas` | atleta | 4 · Painel / 5 · Reserva |
 
 Após o login cada perfil vai direto para a sua tela (administrador → `/admin/quadras`, atleta → `/reservas`).
 Itens do menu marcados "em breve" (Dashboard, Funcionários, Mensagens…) são das próximas entregas.
@@ -68,18 +68,3 @@ bcrypt (custo 12) · JWT em cookie `HttpOnly` + `SameSite=Lax` (+ `Secure` em pr
 requisição · controle de acesso por perfil em todas as rotas de quadras/reservas · atleta só acessa as próprias reservas ·
 rate limit no login e no cadastro · Helmet (CSP sem scripts inline) · validação sempre no servidor · conteúdo digitado pelo
 usuário é inserido na tela como texto, nunca como HTML.
-
-## Locação de hora em hora
-Todas as quadras, de qualquer arena, são alugadas de hora em hora: o servidor recusa início fora da hora cheia e durações quebradas,
-e o cadastro de quadra só aceita abertura/fechamento em hora cheia. Quadras antigas com horário quebrado são ajustadas na
-inicialização (abertura arredonda para cima, fechamento para baixo). Reservas antigas já gravadas não são alteradas.
-
-## Decisões a confirmar
-1. **`nome_arena`** (campo do protótipo do administrador) não existe na modelagem; foi adicionado à tabela `usuario`.
-2. **Cadastro público de administrador** existe no protótipo, mas o PDF diz que o admin cadastra funcionários. Use `PERMITIR_CADASTRO_ADMIN=false` para fechar após criar o primeiro.
-3. **Quadra pertence a uma arena**: a modelagem não tinha esse vínculo; foi adicionada a coluna `quadra.arena_id` (→ `usuario` administrador). Bancos antigos são migrados automaticamente, com as quadras existentes indo para o primeiro administrador.
-4. **Fluxo de status da reserva**: `pendente` (criada) → `confirmada` (atleta confirma presença) → `concluida` (horário passou). Cancelada em qualquer momento até 12 h antes.
-5. **Alteração também respeita 12 h**, igual ao cancelamento (o documento só fala de cancelamento).
-6. **Pagamento** está fora do escopo (Won't): o valor é exibido como "pagamento na arena".
-7. Login aceita e-mail (CPF continua aceito pelo servidor se estiver cadastrado, mas não aparece mais na tela).
-8. Fora do escopo desta entrega: recuperação de senha (US03), telas de funcionário, dashboard e bloqueio de horários (a tabela já existe e já é respeitada nas reservas).
